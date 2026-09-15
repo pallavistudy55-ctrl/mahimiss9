@@ -31,4 +31,8 @@ def process_message(message):
 
 if __name__ == "__main__":
     logging.info("Telegram Copy Bot started listening...")
-    bot.infinity_polling(skip_pending_updates=True)
+    try:
+        bot.delete_webhook(drop_pending_updates=True)
+    except Exception as e:
+        logging.warning(f"Could not drop pending updates: {e}")
+    bot.infinity_polling()
